@@ -1,0 +1,123 @@
+CHECKPOINT 1
+
+Number: 1
+Type of the problem: General Protection Exception
+Symptom: kernel keeps rebooting in the test machine
+Difficulty of finding the bug: 2 hours
+Difficulty of fixing the bug: three lines change, basically set CR4 first, and then CR0
+
+Number: 2
+Type of the problem: Forget to load IDT in boot.S
+Symptom: kernel keeps rebooting in the test machine
+Difficulty of finding the bug: 1 hour
+Difficulty of fixing the bug: one line change, basically include the line lidt idt_desc_ptr after loading the gdt
+
+Number: 3
+Type of the problem: End of Interrupt
+Symptom: RTC not flash on screen
+Difficulty of finding the bug: 1 hour
+Difficulty of fixing the bug: one line change, basically include the line outb(EOI|irq_num,MASTER_8259_COMMAND_PORT)
+
+Number: 4
+Type of the problem: implicit declaration
+Symptom: warning on screen
+Difficulty of finding the bug: 1 hour
+Difficulty of fixing the bug: one line change, basically include void rtc_interrupt() in lib.h
+
+CHECKPOINT2
+
+Number: 1
+Type of the problem: miss edge case
+Symptom: during the test filename, the filename cannot be printed
+Difficulty of finding the bug: 2 hours
+Difficulty of fixing the bug: three lines change, add lines of check if the filename has reached its end
+
+Number: 2
+Type of the problem: miss edge case
+Symptom: While deleting tab, the character is deleted one by one
+Difficulty of finding the bug: 30 min 
+Difficulty of fixing the bug: Write a heper function delete_tab to handle the special case
+
+Number: 3
+Type of the problem: shift key is not working
+Symptom: Pressing the shift key will not change the char output
+Difficulty of finding the bug: 3 hours
+Difficulty of fixing the bug: Correctly implementing booling logic
+
+Number: 4
+Type of problem: Going out of mem 
+Symptom: Page fault
+Difficulty of finding the bug: 1 hour
+Difficulty of fixing the bug: When screen_y goes out of bound, manually change it to 24 which is the last line of the console
+
+CHECKPOINT3
+
+Number:1
+Type of problem: wrong calculation of pcb address
+Symptom: could only execute one process
+Difficulty of finding the bug: 10 min
+Difficulty of fixing the bug: one line change
+
+Number:2
+Type of problem: General Protection Fault
+Symptom: won't be able to execute
+Difficulty of finding the bug: 2 days
+Difficulty of fixing the bug: We found out that in checkpoint one we add an extra wrapper for system calls, which results an extra 'iret', when we delete that wrapper, problem solved
+
+Number:3
+Type of problem: edge case misses
+Symptom: ls command will be able to print out all the directories, however, it cannot pass the user test (syserr)
+Difficulty of finding the bug: 1 day
+Difficulty of fixing the bug: one line change in directory_read, consider when the index is equal to the number of directories
+
+CHECKPOINT4
+
+Number:1
+Type of problem: race condition
+Symptom: fish cannot be displayed correctly
+Difficulty of finding the bug: 2 days
+Difficulty of fixing the bug: one line change in file_read, change the global variable fd we set in checkpoint 2 to a pcb struct element so the race condition disappears
+
+Number:2
+Type of problem: wrong calculation of the parse command index
+Symptom: command cannot be identified
+Difficulty of finding the bug: 20 min
+Difficulty of fixing the bug: one line change, update the index correctly in the function parse_cmd
+
+CHECKPOINT5
+
+Number:1
+Type of problem: video map
+Symptom: fish running on one terminal shows on all three terminals
+Difficulty of finding the bug: 1 days
+Difficulty of fixing the bug: fish never pass the sanity check in the vidmap system call, so the vidmap_paging function never get called. 
+
+Number:2
+Type of problem: does not maintain the pid_count status correctly
+Symptom: exit on all three terminal would fulfill all pid in pid_count
+Difficulty of finding the bug: 20 min
+Difficulty of fixing the bug: delete the if statement before del_pid in halt function
+
+Number:3
+Type of problem: cursor position
+Symptom: sometimes the cursor does not update correctly
+Difficulty of finding the bug: 20 min
+Difficulty of fixing the bug: delete the if statement before update_cursor() in putc_modified function
+
+Number:4
+Type of problem: switch terminal
+Symptom: could only switch between two terminals
+Difficulty of finding the bug: 10 min
+Difficulty of fixing the bug: the sequence of save terminal and restore terminal is wrong.
+
+Number:5
+Type of problem: display terminal
+Symptom: program display on the wrong terminal
+Difficulty of finding the bug: 20 min
+Difficulty of fixing the bug: update the curr_terminal_running in start_terminal function before execute shell. 
+
+Number:6
+Type of problem: display terminal
+Symptom: program display on the wrong terminal
+Difficulty of finding the bug: 20 min
+Difficulty of fixing the bug: update the curr_terminal_running in start_terminal function before execute shell. 
